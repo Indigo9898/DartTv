@@ -6,6 +6,12 @@ module.exports = {
     "./Components/**/*.{js,ts,jsx,tsx}",
     "./app/**/*.{js,ts,jsx,tsx}"
   ],
+  purge: [
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./Components/**/*.{js,ts,jsx,tsx}",
+    "./app/**/*.{js,ts,jsx,tsx}"
+],
+
   theme: {
     minHeight: {
       'full': '100vh',
@@ -221,8 +227,7 @@ module.exports = {
     },
     fontFamily:{
       "moon" : "Moon"
-    },
-    
+    }, 
   },
   plugins: [],
 }
