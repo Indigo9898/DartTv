@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <div className="h-1/10 w-100 flex justify-end items-center">
+    <div className="h-1/10 justify-end w-100 flex items-center">
       <div className="flex mr-5 w-fit whitespace-nowrap">
         <p className="neonText">
           <strong>Powered By</strong>
