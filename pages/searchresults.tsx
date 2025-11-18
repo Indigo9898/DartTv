@@ -44,7 +44,7 @@ export default function SearchResults({ data }: Props) {
           {data.map((show) => {
             const posterUrl =
               show.backdrop_path
-                ? `thtps://image.tmdb.org/t/p/w500${show.backdrop_path}`
+                ? `https://image.tmdb.org/t/p/w500${show.backdrop_path}`
                 : "/fallback-poster.jpg"; // optional: add a placeholder image
 
             return (
