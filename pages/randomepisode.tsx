@@ -1,75 +1,56 @@
+// pages/randomepisode.tsx   (or whatever you named it)
 import Link from "next/link";
-import React, {useState, useEffect, useRef} from "react";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
-import { getShowDetails } from "./api/moviesearch";
+import { getShowDetails } from "./api/moviesearch"; // adjust path if needed
 
-function getRandomInt(max) {
-    console.log(max)
-    return Math.floor(Math.random() * max) + 1;
+// Simple helper – no console.log in production
+const getRandomInt = (max: number) => Math.floor(Math.random() * max) + 1;
+
+export default function RandomEpisode({ data }: { data: any }) {
+  // Filter out season 0 (Specials) – this is the only smart thing we do
+  const realSeasons = data.seasons.filter((s: any) => s.season_number > 0);
+
+  // Pick random season & episode ONCE (no useEffect mess)
+  const randomSeasonIndex = Math.floor(Math.random() * realSeasons.length);
+  const selectedSeason = realSeasons[randomSeasonIndex].season_number;
+  const selectedEpisode = getRandomInt(realSeasons[randomSeasonIndex].episode_count);
+
+  return (
+    <div className="h-full w-full flex justify-center items-center flex-col bg-mainBlack text-white neonText text-2xl">
+      <Nav />
+
+      <div className="flex justify-center flex-col items-center h-8/10 w-100">
+        <p>Season: {selectedSeason}</p>
+        <p>Episode: {selectedEpisode}</p>
+        <Link href="/prototype">Start Over</Link>
+      </div>
+
+      <Footer />
+    </div>
+  );
+}
+
+// Fixed getServerSideProps – safe + no TypeScript errors
+export async function getServerSideProps(context: any) {
+  const showId = context.query.showId;
+
+  // Safety first
+  if (!showId || Array.isArray(showId)) {
+    return { notFound: true };
   }
 
-const RandomEpisode =  ({data}) => {
-    const [results, setResults] = useState([]);
-    const [numberOfSeasons, setNumSeasons] = useState(0);
-    const [selectedSeason, setSelectedSeason] = useState(0);
-    const [selectedEpisode, setSelectedEpisode] = useState(0);
+  // Pass showId exactly as the API expects (string)
+  const data = await getShowDetails(showId);
 
-    console.log(data)
-    // console.log(numberOfSeasons)
-    // console.log(selectedSeason)
-    // console.log(selectedEpisode)
-  
-    useEffect(() => {
-        if(selectedEpisode === 0){
-            setResults(data);
-            setNumSeasons(data.seasons.length - 1);
-            setSelectedSeason(getRandomInt(data.seasons.length - 1));
-            if(selectedSeason != 0){
-                console.log(selectedSeason)
-                setSelectedEpisode(getRandomInt(data.seasons[selectedSeason].episode_count));
-            }
-            if(data.seasons.length - 1 === 0){
-                setSelectedEpisode(getRandomInt(data.seasons[0].episode_count));
-            }
-            
-        } 
-    })
-    
-    if(selectedEpisode){
-        return(
-            <div className="h-full w-full flex justify-center items-center flex-col bg-mainBlack text-white neonText text-2xl ">
-                <Nav/>
-                <div className="flex justify-center flex-col items-center h-8/10 w-100">
-                    <p>Season: {selectedSeason}</p>
-                    <p>Episode: {selectedEpisode}</p>
-                    <Link href={"/prototype"}>Start Over</Link>
-                </div>
-                <Footer/>
-            </div>
-        )
-    }else{
-        return(
-            <div className="h-full w-full flex justify-center items-center">
-                <p>Loading</p>
-            </div>
-        )
-    }
-   
+  // If something went wrong, show 404
+  if (!data || !data.seasons) {
+    return { notFound: true };
+  }
+
+  return {
+    props: {
+      data,
+    },
+  };
 }
-
-export async function getServerSideProps(context) {
-    const showId = context.query.showId;
-    var data;
-
-    await getShowDetails(showId).then((res) => {
-        data = res
-    })
-
-    return{
-        props: {
-            data: data
-        }
-    }
-}
-export default RandomEpisode;
