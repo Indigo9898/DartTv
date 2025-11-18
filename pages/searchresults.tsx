@@ -38,7 +38,7 @@ export default function SearchResults({ data }: Props) {
       <Nav />
 
       <div className="min-h-8/10 flex flex-col p-1rem">
-        <h1 className="self-center mt-5 mb-2 text-2xl neonText">Shows Found</h1>
+        <h1 className="self-center mt-3rem mb-3rem text-3xl neonText">Shows Found</h1>
 
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 h-100 w-100 auto-rows-fr">
           {data.map((show) => {

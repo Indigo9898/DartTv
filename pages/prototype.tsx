@@ -24,8 +24,8 @@ const Prototype = () => {
       <Nav />
 
       <div className="h-9/10 md:h-8/10 w-full flex items-center flex-col">
-        <p className="mt-5 mb-5 text-xl">Are You Ready To Toss The Dart?</p>
-
+        <p className="mt-3rem text-4xl font-bold">Are You Ready To Toss The Dart?</p>
+        <p className="text-white mt-1rem mb-3rem">Random Episode Generator</p>
         <form onSubmit={handleSubmit} className="flex w-100 justify-center items-center">
           <input
             id="neonSearch"
@@ -55,9 +55,6 @@ const Prototype = () => {
           </Link>
         </form>
 
-        <div className="mt-5 text-xl">
-          <p className="neonText">Your Shows</p>
-        </div>
       </div>
 
       <Footer />
