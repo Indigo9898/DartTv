@@ -19,7 +19,7 @@ export default function SearchResults({ data }: Props) {
   // If no results (empty array or null), show friendly message
   if (!data || data.length === 0) {
     return (
-      <div className="h-full w-full overflow-x-hidden bg-mainBlack text-white">
+      <div className="h-full w-full min-h-screen flex flex-col bg-mainBlack text-white neonText">
         <Nav />
         <div className="min-h-screen flex flex-col items-center justify-center p-1rem">
           <h1 className="text-4xl neonText mb-4">No shows found</h1>
@@ -34,7 +34,7 @@ export default function SearchResults({ data }: Props) {
   }
 
   return (
-    <div className="h-full w-full overflow-x-hidden">
+    <div className="h-full w-full overflow-x-hidden bg-mainBlack text-white neonText">
       <Nav />
 
       <div className="min-h-8/10 flex flex-col p-1rem">

@@ -54,7 +54,7 @@ export default function Prototype() {
   }, []);
 
   return (
-    <div className="h-full w-full min-h-screen flex flex-col">
+    <div className="h-full w-full min-h-screen flex flex-col bg-mainBlack text-white neonText">
       <Nav />
 
       <div className="h-9/10  md:h-8/10 w-full flex items-center flex-col flex-1">
